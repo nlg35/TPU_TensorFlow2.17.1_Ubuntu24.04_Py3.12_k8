@@ -5,11 +5,11 @@
 Builds for Coral Edge TPU (M.2 PCIe) on a dockerized Ubuntu 24.04.  
 Ubuntu is a container of a QNAP NAS which has a Celeron CPU (x86_64 or k8).
 
-I am just going to write the steps I followed thanks to the repo of @Feranick.  
+I am just going to write the steps I followed thanks to the repo of @feranick.  
 Nothing would be possible without his work.
 
 source:  [https://github.com/feranick/pycoral](https://github.com/feranick/pycoral)  
-Big thanks to @Feranick the author of the repo. He saved lots of Coral users.
+Big thanks to @feranick the author of the repo. He saved lots of Coral users.
 
 The files in this repo are just the results of @feranick pycoral compilation for:
 * Ubuntu 24.04
@@ -18,7 +18,7 @@ The files in this repo are just the results of @feranick pycoral compilation for
 * Tensor Flow 2.17.1
 
 This repo was inspired by [https://github.com/virnik0/pycoral_builds](https://github.com/virnik0/pycoral_builds)  
-Thanks to @Feranick & @virnik0 and their instructions, I managed to reproduce the steps.  
+Thanks to @feranick & @virnik0 and their instructions, I managed to reproduce the steps.  
 The sole purpose of this repo is to possibly help.
 
 At the very beginning: let's introduce the hardware.
@@ -107,6 +107,36 @@ Then you can connect to the IP of the container via Putty.
 Note: Each time you restart the container, you have to restart manually the SSH server in the container console with this command `service ssh start` .
 
 ## `gasket-dkms` : Compilation & installation
+### CPU ans kernel
+Let's verify the CPU:
+```bash
+uname -i
+```
+Output: `x86_64`
+
+---
+```bash
+uname -a
+```
+Output: `Linux 4a60500cf443 5.10.60-qnap #1 SMP Thu Nov 14 01:09:06 CST 2024 x86_64 x86_64 x86_64 GNU/Linux`
+
+### TPU
+Let's verify that the PCIe driver is loaded:
+```bash
+ls /dev/apex
+```
+Output: `/dev/apex_0  /dev/apex_1`
+
+---
+```bash
+lsmod | grep apex
+```
+Output:  
+```
+apex                   20480  0
+gasket                 98304  1 apex
+```
+
 ### Is `gasket-dkms` already installed ?
 `dpkg -l | grep gasket-dkms` returns nothing if `gasket-dkms` is not installed.
 
@@ -163,9 +193,12 @@ Change "oral" to "coral".
 The first letter is missing.
 
 ### Remove ARM dpkg-buildpackage
-I had to remove all the ARM buildings because they they caused an error (my Ubuntu doesn't have the arm librairies).
+I had to remove all the ARM buildings because they caused an error:  
+`ModuleNotFoundError: No module named '_sysconfigdata__aarch64-linux-gnu'` or  
+`ModuleNotFoundError: No module named '_sysconfigdata__arm-linux-gnueabihf'`
+(my Ubuntu doesn't have these arm librairies).
 
-In file `Makefile`:
+So, I modified the file `Makefile`:
 * L 179 & 180: comment `dpkg-buildpackage … armhf` and `arm64`.
 * L 215 & 216: same but put the parenthesis back above (and remove the `&& \` at the end of the line)
 * L 240:  `DOCKER_CPUS := k8`   (remove `armv7a aarch64`)
