@@ -23,7 +23,7 @@ This repo was inspired by [https://github.com/virnik0/pycoral_builds](https://gi
 Thanks to @feranick & @virnik0 and their instructions, I managed to reproduce the steps.  
 The sole purpose of this repo is to possibly help.
 
-At the very beginning: let's introduce the hardware.
+This installation proposes to keep Python 3.12 and to install the wheels of Pycoral and TfliteRuntime and downgrade Numpy. Thus the old Coral models (initially reserved for Python 3.9) work.
 
 ## TOC
 Here is the table of contents:
@@ -62,6 +62,8 @@ Here is the table of contents:
   - [9.5. Do the test](https://github.com/nlg35/TPU_TensorFlow2.17.1_Ubuntu24.04_Py3.12_k8/blob/main/README.md#do-the-test)
 
 ## Hardware
+At the very beginning: let's introduce the hardware.
+
 On a QNAP NAS, I have the [Coral dual Edge TPU](https://coral.ai/products/m2-accelerator-dual-edgetpu) mounted on an [PCIe - Dual Edge TPU Adapter](https://github.com/magic-blue-smoke/Dual-Edge-TPU-Adapter). And this PCIe is plugged in the NAS and recognized by the OS.
 
 ## Docker Compose
@@ -146,7 +148,7 @@ Note: Each time you restart the container, you have to restart manually the SSH 
 
 ## `gasket-dkms` : Compilation & installation
 ### CPU ans kernel
-Let's verify the CPU:
+Let's verify the 64-bit architecture (x86 processor) and kernel version:
 ```bash
 uname -i
 ```
@@ -154,9 +156,9 @@ Output: `x86_64`
 
 ---
 ```bash
-uname -a
+uname -r
 ```
-Output: `Linux 4a60500cf443 5.10.60-qnap #1 SMP Thu Nov 14 01:09:06 CST 2024 x86_64 x86_64 x86_64 GNU/Linux`
+Output: `5.10.60-qnap`
 
 ### TPU
 Let's verify that the PCIe driver is loaded:
@@ -179,6 +181,8 @@ gasket                 98304  1 apex
 `dpkg -l | grep gasket-dkms` returns nothing if `gasket-dkms` is not installed.
 
 ### Conpilation of `gasket-dkms`
+`gasket-dkms` is a package that contains the driver for Edge TPU accelerators. Google has not updated its repository for recent Linux kernels (> 6.5), so the package is broken. The code has been fixed long ago in the [Github repository](https://github.com/google/gasket-driver) but Google has not compiled and published the binaries. So, we have to compile it ourselves.
+
 ```bash
 apt-get install -y sudo git
 apt-get install -y build-essential
