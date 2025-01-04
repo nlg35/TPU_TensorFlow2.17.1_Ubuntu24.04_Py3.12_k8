@@ -1,5 +1,7 @@
 # TPU_TensorFlow2.17.1_Ubuntu24.04_Py3.12_k8
-**Date : 2025-01-05**  
+
+**Date: 2025-01-05**  
+
 Builds for Coral Edge TPU (M.2 PCIe) on a dockerized Ubuntu 24.04.  
 Ubuntu is a container of a QNAP NAS which has a Celeron CPU (x86_64 or k8).
 
@@ -67,15 +69,18 @@ Note: All the following commands are done by `root`. I know it is not a good ide
 My only excuse is that the container will be destroyed right after creating the files, sorry!
 
 ```bash
-passwd root   # create your own password
+passwd root   # choose your own password for root
 apt update && apt -y upgrade
-apt -y install openssh-server vim kmod pciutils python3 python3-pip wget
-sed -i "s/#PermitRootLogin .*/PermitRootLogin yes/" /etc/ssh/sshd_config
-sed -i "s/#PasswordAuthentication .*/PasswordAuthentication yes/" /etc/ssh/sshd_config
-sed -i "s/#Port 22/Port 22/" /etc/ssh/sshd_config
-service ssh restart   # et non systemctl car docker
 rm -f /etc/localtime
 echo "Europe/Paris" >/etc/timezone
+apt-get -y install ssh
+apt-get -y install openssh-server vim kmod pciutils python3 python3-pip wget
+cat > /etc/ssh/sshd_config.d/10-password-login-for-root.conf <<"EOF"
+Port 22
+PermitRootLogin yes
+PasswordAuthentication yes
+EOF
+service ssh restart   # no systemctl because of docker
 cat >> ~/.bashrc <<"EOF"
 alias ls='ls --color=auto'
 force_color_prompt=yes
@@ -135,7 +140,7 @@ clang-18 --version    # pour vérifier
 ```
 ### Bazel 6.5.0
 ```bash
-apt install apt-transport-https curl gnupg -y
+apt-get -y install apt-transport-https curl gnupg
 curl -fsSL https://bazel.build/bazel-release.pub.gpg | gpg --dearmor >bazel-archive-keyring.gpg
 mv bazel-archive-keyring.gpg /usr/share/keyrings
 echo "deb [arch=amd64 signed-by=/usr/share/keyrings/bazel-archive-keyring.gpg] https://storage.googleapis.com/bazel-apt stable jdk1.8" | tee /etc/apt/sources.list.d/bazel.list
@@ -171,7 +176,7 @@ To be consistent, I also modified `scripts/build.sh`:
 
 ### Compilation
 There are several flavors of compilation: `make pybind`, `make deb`, `make wheel`.  
-To see the list and its explanations, type `make help`.
+To see the list and explanations, type `make help`.
 
 The first step is to build native code:
 ```bash
@@ -254,7 +259,7 @@ We can save the files somewhere (like I did in this repo) and then destroy the U
 ## Test
 ### Install the librairies
 ```bash
-apt-get install -y sudo git
+apt-get -y install sudo git
 mkdir /home/mimo/fichiers && cd /home/mimo/fichiers
 git clone https://github.com/nlg35/TPU_TensorFlow2.17.1_Ubuntu24.04_Py3.12_k8
 cd /home/mimo/fichiers/TPU*
@@ -303,4 +308,3 @@ My output is :
 -------RESULTS--------
 Ara macao (Scarlet Macaw): 0.75781
 ```
-
