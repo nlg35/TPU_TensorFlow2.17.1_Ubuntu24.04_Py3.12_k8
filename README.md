@@ -26,7 +26,7 @@ The sole purpose of this repo is to possibly help.
 At the very beginning: let's introduce the hardware.
 
 ## Hardware
-On a QNAP NAS, I have the [Coral dual Edge TPU](https://coral.ai/products/m2-accelerator-dual-edgetpu) mounted on an [PCIe - Dual Edge TPU Adapter](https://github.com/magic-blue-smoke/Dual-Edge-TPU-Adapter). And this PCIe is my NAS and recognized by the OS.
+On a QNAP NAS, I have the [Coral dual Edge TPU](https://coral.ai/products/m2-accelerator-dual-edgetpu) mounted on an [PCIe - Dual Edge TPU Adapter](https://github.com/magic-blue-smoke/Dual-Edge-TPU-Adapter). And this PCIe is plugged in the NAS and recognized by the OS.
 
 ## Docker Compose
 In Container Station, I create a Ubuntu 24.04 container with a fictitious MAC address (and my router will attribute a reserved IP address in my LAN).
