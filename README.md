@@ -155,10 +155,10 @@ Then I had to change some files to adapt to my Ubuntu.
 ### Typo in `debian/changelog`
 At the moment (2025-01-05), the is a little typo to correct at the very first line of the file `debian/changelog`.  
 Change "oral" to "coral".  
-The fist letter is missing.
+The first letter is missing.
 
 ### Remove ARM dpkg-buildpackage
-I had to remove all the ARM building because they they caused an error (my Ubuntu doesn't have the librairies).
+I had to remove all the ARM buildings because they they caused an error (my Ubuntu doesn't have the arm librairies).
 
 In file `Makefile`:
 * L 179 & 180: comment `dpkg-buildpackage … armhf` and `arm64`.
