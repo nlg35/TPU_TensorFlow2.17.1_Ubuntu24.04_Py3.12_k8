@@ -153,7 +153,7 @@ git clone --recurse-submodules https://github.com/feranick/pycoral
 Then I had to change some files to adapt to my Ubuntu.
 
 ### Typo in `debian/changelog`
-At the moment (2025-01-05), the is a little typo to correct at the very first line of the file `debian/changelog`.  
+At the moment (2025-01-05), there is a little typo to correct at the very first line of the file `debian/changelog`.  
 Change "oral" to "coral".  
 The first letter is missing.
 
@@ -246,6 +246,10 @@ You will see:
 * `libedgetpu-dev_16.0tf2.17.1-1_amd64.deb`
 * `libedgetpu1-max_16.0tf2.17.1-1_amd64.deb`
 * `libedgetpu1-std_16.0tf2.17.1-1_amd64.deb`
+
+### Conclusion
+All the librairies are here: these `*.deb` files and the contents of the directory `/dist`.  
+We can save the files somewhere (like I did in this repo) and then destroy the Ubuntu container and the map volume content.
 
 ## Test
 ### Install the librairies
