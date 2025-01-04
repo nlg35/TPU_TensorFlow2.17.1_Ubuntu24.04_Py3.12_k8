@@ -25,6 +25,42 @@ The sole purpose of this repo is to possibly help.
 
 At the very beginning: let's introduce the hardware.
 
+## TOC
+Here is the table of contents:
+
+- [1. Hardware](https://github.com/nlg35/TPU_TensorFlow2.17.1_Ubuntu24.04_Py3.12_k8/blob/main/README.md#hardware)
+- [2. Docker Compose](https://github.com/nlg35/TPU_TensorFlow2.17.1_Ubuntu24.04_Py3.12_k8/blob/main/README.md#docker-compose)
+- [3. SSH to the container](https://github.com/nlg35/TPU_TensorFlow2.17.1_Ubuntu24.04_Py3.12_k8/blob/main/README.md#ssh-to-the-container)
+- [4. `gasket-dkms` : Compilation & installation](https://github.com/nlg35/TPU_TensorFlow2.17.1_Ubuntu24.04_Py3.12_k8/blob/main/README.md#gasket-dkms--compilation--installation)
+  - [4.1. CPU and kernel](https://github.com/nlg35/TPU_TensorFlow2.17.1_Ubuntu24.04_Py3.12_k8/blob/main/README.md#cpu-and-kernel)
+  - [4.2. TPU](https://github.com/nlg35/TPU_TensorFlow2.17.1_Ubuntu24.04_Py3.12_k8/blob/main/README.md#tpu)
+  - [4.3. Is `gasket-dkms` already installed?](https://github.com/nlg35/TPU_TensorFlow2.17.1_Ubuntu24.04_Py3.12_k8/blob/main/README.md#is-gasket-dkms-already-installed)
+  - [4.4. Compilation of `gasket-dkms`](https://github.com/nlg35/TPU_TensorFlow2.17.1_Ubuntu24.04_Py3.12_k8/blob/main/README.md#compilation-of-gasket-dkms)
+  - [4.5  Installation of `gasket-dkms`](https://github.com/nlg35/TPU_TensorFlow2.17.1_Ubuntu24.04_Py3.12_k8/blob/main/README.md#installation-of-gasket-dkms)
+- [5. Installation of Clang 18 & Bazel 6.5.0](https://github.com/nlg35/TPU_TensorFlow2.17.1_Ubuntu24.04_Py3.12_k8/blob/main/README.md#installation-of-clang-18--bazel-650)
+  - [5.1. Clang 18](https://github.com/nlg35/TPU_TensorFlow2.17.1_Ubuntu24.04_Py3.12_k8/blob/main/README.md#clang-18)
+  - [5.2. Bazel 6.5.0](https://github.com/nlg35/TPU_TensorFlow2.17.1_Ubuntu24.04_Py3.12_k8/blob/main/README.md#bazel-650)
+- [6. Clone & compile the Feranick repo](https://github.com/nlg35/TPU_TensorFlow2.17.1_Ubuntu24.04_Py3.12_k8/blob/main/README.md#clone--compile-the-feranick-repo)
+  - [6.1. Clone](https://github.com/nlg35/TPU_TensorFlow2.17.1_Ubuntu24.04_Py3.12_k8/blob/main/README.md#clone)
+  - [6.2. Typo in `debian/changelog`](https://github.com/nlg35/TPU_TensorFlow2.17.1_Ubuntu24.04_Py3.12_k8/blob/main/README.md#typo-in-debianchangelog)
+  - [6.3. Remove ARM dpkg-buildpackage](https://github.com/nlg35/TPU_TensorFlow2.17.1_Ubuntu24.04_Py3.12_k8/blob/main/README.md#remove-arm-dpkg-buildpackage)
+  - [6.4. Compilation](https://github.com/nlg35/TPU_TensorFlow2.17.1_Ubuntu24.04_Py3.12_k8/blob/main/README.md#compilation)
+- [7. Export wheels and deb files](https://github.com/nlg35/TPU_TensorFlow2.17.1_Ubuntu24.04_Py3.12_k8/blob/main/README.md#export-wheels-and-deb-files)
+  - [7.1. Pycoral wheel](https://github.com/nlg35/TPU_TensorFlow2.17.1_Ubuntu24.04_Py3.12_k8/blob/main/README.md#pycoral-wheel)
+  - [7.2. TensorFlow wheel](https://github.com/nlg35/TPU_TensorFlow2.17.1_Ubuntu24.04_Py3.12_k8/blob/main/README.md#tensorflow-wheel)
+  - [7.3. Pycoral deb](https://github.com/nlg35/TPU_TensorFlow2.17.1_Ubuntu24.04_Py3.12_k8/blob/main/README.md#pycoral-deb)
+  - [7.4. TFlite deb](https://github.com/nlg35/TPU_TensorFlow2.17.1_Ubuntu24.04_Py3.12_k8/blob/main/README.md#tflite-deb)
+  - [7.5. EdgeTPU ZIP](https://github.com/nlg35/TPU_TensorFlow2.17.1_Ubuntu24.04_Py3.12_k8/blob/main/README.md#edgetpu-zip)
+- [8. LibEdgeTPU deb](https://github.com/nlg35/TPU_TensorFlow2.17.1_Ubuntu24.04_Py3.12_k8/blob/main/README.md#libedgetpu-deb)
+  - [8.1. Compilation](https://github.com/nlg35/TPU_TensorFlow2.17.1_Ubuntu24.04_Py3.12_k8/blob/main/README.md#compilation-1)
+  - [8.2. Export deb file](https://github.com/nlg35/TPU_TensorFlow2.17.1_Ubuntu24.04_Py3.12_k8/blob/main/README.md#export-deb-file)
+- [9. Test](https://github.com/nlg35/TPU_TensorFlow2.17.1_Ubuntu24.04_Py3.12_k8/blob/main/README.md#test)
+  - [9.1. Install the libraries](https://github.com/nlg35/TPU_TensorFlow2.17.1_Ubuntu24.04_Py3.12_k8/blob/main/README.md#install-the-libraries)
+  - [9.2. Install the Coral test](https://github.com/nlg35/TPU_TensorFlow2.17.1_Ubuntu24.04_Py3.12_k8/blob/main/README.md#install-the-coral-test)
+  - [9.3. Change Numpy version](https://github.com/nlg35/TPU_TensorFlow2.17.1_Ubuntu24.04_Py3.12_k8/blob/main/README.md#change-numpy-version)
+  - [9.4. Test Numpy](https://github.com/nlg35/TPU_TensorFlow2.17.1_Ubuntu24.04_Py3.12_k8/blob/main/README.md#test-numpy)
+  - [9.5. Do the test](https://github.com/nlg35/TPU_TensorFlow2.17.1_Ubuntu24.04_Py3.12_k8/blob/main/README.md#do-the-test)
+
 ## Hardware
 On a QNAP NAS, I have the [Coral dual Edge TPU](https://coral.ai/products/m2-accelerator-dual-edgetpu) mounted on an [PCIe - Dual Edge TPU Adapter](https://github.com/magic-blue-smoke/Dual-Edge-TPU-Adapter). And this PCIe is plugged in the NAS and recognized by the OS.
 
