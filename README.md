@@ -1,22 +1,22 @@
 # TPU_TensorFlow2.17.1_Ubuntu24.04_Py3.12_k8
-**Date : 2025-01-05**
-Builds for Coral Edge TPU (M.2 PCI) on a dockerized Ubuntu 24.04.
+**Date : 2025-01-05**  
+Builds for Coral Edge TPU (M.2 PCI) on a dockerized Ubuntu 24.04.  
 Ubuntu is a container of a QNAP NAS which has a Celeron CPU (x86_64 or k8).
 
-I am just going to write the steps I followed thanks to the repo of @Feranick.
+I am just going to write the steps I followed thanks to the repo of @Feranick.  
 Nothing would be possible without his work.
 
-source:  [https://github.com/feranick/pycoral](https://github.com/feranick/pycoral)
+source:  [https://github.com/feranick/pycoral](https://github.com/feranick/pycoral)  
 Big thanks to @Feranick the author of the repo. He saved lots of Coral users.
 
-The files in this repo are just the results of @feranick pycoral compilation for :
+The files in this repo are just the results of @feranick pycoral compilation for:
 * Ubuntu 24.04
 * Python 3.12
 * CPU x86_64 or k8
 * Tensor Flow 2.17.1
 
-This repo was inspired by [https://github.com/virnik0/pycoral_builds](https://github.com/virnik0/pycoral_builds)
-Thanks to @Feranick & @virnik0 and their instructions, I managed to reproduce the steps.
+This repo was inspired by [https://github.com/virnik0/pycoral_builds](https://github.com/virnik0/pycoral_builds)  
+Thanks to @Feranick & @virnik0 and their instructions, I managed to reproduce the steps.  
 The sole purpose of this repo is to possibly help.
 
 At the very beginning: let's introduce the hardware.
@@ -49,7 +49,7 @@ networks:
     name: monbridgeLAN
 ```
 
-And the Bridge LAN was prevously created with this command :
+And the Bridge LAN was prevously created with this command:
 
 ```bash
 $ docker network create -d qnet --opt=iface=bond0 --ipam-driver=qnet --ipam-opt=iface=bond0 \
@@ -57,13 +57,13 @@ $ docker network create -d qnet --opt=iface=bond0 --ipam-driver=qnet --ipam-opt=
 ```
 
 ## SSH to the container
-In the Bash console of the container, let's :
+In the Bash console of the container, let's:
 * create your own password for `root`
 * install SSH for user `root`
 * define your timezone
 * add some syntax highlighting (to beautify your life)
 
-Note: All the following commands are done by `root`. I know it is not a good idea.
+Note: All the following commands are done by `root`. I know it is not a good idea.  
 My only excuse is that the container will be destroyed right after creating the files, sorry!
 
 ```bash
@@ -98,7 +98,7 @@ unset color_prompt force_color_prompt
 
 EOF
 ```
-Then you can connect to the IP of the container via Putty.
+Then you can connect to the IP of the container via Putty.  
 Note: Each time you restart the container, you have to restart manually the SSH server in the container console with this command `service ssh start` .
 
 ## `gasket-dkms` : Compilation & installation
@@ -117,7 +117,7 @@ git clone https://github.com/feranick/gasket-driver
 cd /home/mimo/gasket-dkms/gasket-driver/
 debuild -us -uc -tc -b
 ```
-You should recover a `deb` file like `gasket-dkms*.deb`
+You should recover a `deb` file named `gasket-dkms*.deb`
 
 ### Instalation of `gasket-dkms`
 ```bash
@@ -153,8 +153,8 @@ git clone --recurse-submodules https://github.com/feranick/pycoral
 Then I had to change some files to adapt to my Ubuntu.
 
 ### Typo in `debian/changelog`
-At the moment (2025-01-05), the is a little typo to correct at the very first line of the file `debian/changelog`.
-Change "oral" to "coral".
+At the moment (2025-01-05), the is a little typo to correct at the very first line of the file `debian/changelog`.  
+Change "oral" to "coral".  
 The fist letter is missing.
 
 ### Remove ARM dpkg-buildpackage
@@ -170,7 +170,7 @@ To be consistent, I also modified `scripts/build.sh`:
 * `* PYTHON_VERSIONS="3.12"`
 
 ### Compilation
-There are several flavors of compilation: `make pybind`, `make deb`, `make wheel`.
+There are several flavors of compilation: `make pybind`, `make deb`, `make wheel`.  
 To see the list and its explanations, type `make help`.
 
 The first step is to build native code:
@@ -225,7 +225,7 @@ TF_PYTHON_VERSION=3.12 CPU=k8 make runtime
 `make runtime` insert a ZIP file in the folder `/dist`.
 
 ## LibEdgeTPU deb
-We have navigate inside folder `libedgetpu` which is inside feranick repo.
+We have navigate inside folder `libedgetpu` which is inside feranick repo.  
 The first step is to build the code.
 
 ### Compilation
@@ -241,7 +241,7 @@ TF_PYTHON_VERSION=3.12 make
 ```bash
 debuild -us -uc -tc -b
 ```
-The files are placed in the parent folder, so `cd ..`
+The files are placed in the parent folder, so just type `cd ..`  
 You will see:
 * `libedgetpu-dev_16.0tf2.17.1-1_amd64.deb`
 * `libedgetpu1-max_16.0tf2.17.1-1_amd64.deb`
