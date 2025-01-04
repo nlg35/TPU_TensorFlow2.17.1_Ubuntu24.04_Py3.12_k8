@@ -12,10 +12,12 @@ source:  [https://github.com/feranick/pycoral](https://github.com/feranick/pycor
 Big thanks to @feranick the author of the repo. He saved lots of Coral users.
 
 The files in this repo are just the results of @feranick pycoral compilation for:
+* CPU x86_64 or k8
 * Ubuntu 24.04
 * Python 3.12
-* CPU x86_64 or k8
-* Tensor Flow 2.17.1
+* TensorFlow 2.17.1
+* PyCoral 2.0.3
+* NumPy 1.26.4
 
 This repo was inspired by [https://github.com/virnik0/pycoral_builds](https://github.com/virnik0/pycoral_builds)  
 Thanks to @feranick & @virnik0 and their instructions, I managed to reproduce the steps.  
