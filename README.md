@@ -1,6 +1,6 @@
 # TPU_TensorFlow2.17.1_Ubuntu24.04_Py3.12_k8
 **Date : 2025-01-05**  
-Builds for Coral Edge TPU (M.2 PCI) on a dockerized Ubuntu 24.04.  
+Builds for Coral Edge TPU (M.2 PCIe) on a dockerized Ubuntu 24.04.  
 Ubuntu is a container of a QNAP NAS which has a Celeron CPU (x86_64 or k8).
 
 I am just going to write the steps I followed thanks to the repo of @Feranick.  
@@ -25,7 +25,7 @@ At the very beginning: let's introduce the hardware.
 On a QNAP NAS, I have the [Coral dual Edge TPU](https://coral.ai/products/m2-accelerator-dual-edgetpu) mounted on an [PCIe - Dual Edge TPU Adapter](https://github.com/magic-blue-smoke/Dual-Edge-TPU-Adapter). And this PCIe is my NAS and recognized by the OS.
 
 ## Docker Compose
-In Container Station, I create a Ubuntu 24.04 container with a a fictitious MAC address (and my router will attribute a reserved IP address in my LAN).
+In Container Station, I create a Ubuntu 24.04 container with a fictitious MAC address (and my router will attribute a reserved IP address in my LAN).
 
 ```dockerfile
 version: "3"
