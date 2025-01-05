@@ -60,6 +60,7 @@ Here is the table of contents:
   - [9.3. Change Numpy version](https://github.com/nlg35/TPU_TensorFlow2.17.1_Ubuntu24.04_Py3.12_k8/blob/main/README.md#change-numpy-version)
   - [9.4. Test Numpy](https://github.com/nlg35/TPU_TensorFlow2.17.1_Ubuntu24.04_Py3.12_k8/blob/main/README.md#test-numpy)
   - [9.5. Do the test](https://github.com/nlg35/TPU_TensorFlow2.17.1_Ubuntu24.04_Py3.12_k8/blob/main/README.md#do-the-test)
+- [10. Point of interest of each file](https://github.com/nlg35/TPU_TensorFlow2.17.1_Ubuntu24.04_Py3.12_k8/blob/main/README.md#point-of-interest-of-each-file)
 
 ## Hardware
 At the very beginning: let's introduce the hardware.
@@ -383,3 +384,17 @@ My output is :
 -------RESULTS--------
 Ara macao (Scarlet Macaw): 0.75781
 ```
+## Point of interest of each file
+**Relationship between TensorFlow and TFLite:**
+* TensorFlow is a powerful open-source machine learning framework developed by Google, used for creating, training, and deploying machine learning models. It Runs primarily on CPUs, GPUs, and TPUs (Tensor Processing Units) in development environments.
+* You typically develop and train models using TensorFlow on a powerful machine. Once satisfied with the model's performance, you convert it to TFLite for deployment on Edge TPUs or other embedded devices.
+* TF lite is a lightweight library for deploying pre-trained TensorFlow models on mobile and embedded devices. TensorFlow Lite models are smaller and optimized.
+
+
+**Coral Edge TPU Development Files:**
+These files are essential for running TensorFlow Lite models on Coral Edge TPUs.
+* gasket-dkms.deb: It's a package containing the device driver for Edge TPUs. Required to enable the Linux kernel to recognize and interact with the Edge TPU hardware.
+* libedgeTPU.deb (or edgedpu_runtime.zip): It is the core Edge TPU library that provides low-level access to the Edge TPU hardware. It enables communication between  software and Edge TPU.
+* pycoral.whl (or python3-pycoral.deb): It is a Python library that simplifies working with Edge TPUs. Builds on top of libedgeTPU and offers a higher-level API for TensorFlow Lite model execution on Edge TPUs. With PyCoral, you can use standard TensorFlow Lite models (.tflite files) directly on the Edge TPU, there is no need to convert it into _edgetpu.tflite.
+* tflite_runtime.whl (or python3-tflite-runtime.deb): It's the TFLite runtime library, essential for running TFLite models on various platforms, including Edge TPUs. You can use the TFLite runtime directly without PyCoral library.
+* python3-pycoral-examples.deb (Optional): A package containing example code demonstrating how to use Pycoral for Edge TPU development.
