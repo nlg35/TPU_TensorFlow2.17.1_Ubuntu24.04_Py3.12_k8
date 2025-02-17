@@ -393,7 +393,7 @@ Ara macao (Scarlet Macaw): 0.75781
 
 **Coral Edge TPU Development Files:**
 These files are essential for running TensorFlow Lite models on Coral Edge TPUs.
-* `gasket-dkms.deb`: It's a package containing the device driver for Edge TPUs. Required to enable the Linux kernel to recognize and interact with the Edge TPU hardware.
+* `gasket-dkms.deb`: It's a package containing the device driver for Edge TPUs, required for PCIe devices only, to enable the Linux kernel to recognize and interact with the Edge TPU hardware.
 * `libedgeTPU.deb` (or `edgedpu_runtime.zip`): It is the core Edge TPU library that provides low-level access to the Edge TPU hardware. It enables communication between  software and Edge TPU.
 * `pycoral.whl` (or `python3-pycoral.deb`): It is a Python library that simplifies working with Edge TPUs. Builds on top of libedgeTPU and offers a higher-level API for TensorFlow Lite model execution on Edge TPUs. With PyCoral, you can use standard TensorFlow Lite models (.tflite files) directly on the Edge TPU, there is no need to convert it into _edgetpu.tflite.
 * `tflite_runtime.whl` (or `python3-tflite-runtime.deb`): It's the TFLite runtime library, essential for running TFLite models on various platforms, including Edge TPUs. You can use the TFLite runtime directly without PyCoral library.
