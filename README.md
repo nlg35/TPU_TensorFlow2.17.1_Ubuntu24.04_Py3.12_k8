@@ -197,7 +197,7 @@ debuild -us -uc -tc -b
 ```
 You should recover a `deb` file named `gasket-dkms*.deb`
 
-### Instalation of `gasket-dkms`
+### Installation of `gasket-dkms`
 ```bash
 cd /home/mimo/gasket-dkms
 dpkg -i gasket-dkms*.deb
